@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-userprofile',
@@ -6,30 +7,47 @@ import { Component } from '@angular/core';
   styleUrl: './userprofile.component.scss'
 })
 export class UserprofileComponent {
-  name = ""
-  email = ""
-  dob = ""
-  counter = 0
+  counter = 0;
+  
+  // Create FormGroup with FormControls
+  userForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+    dob: new FormControl('')
+  });
+  
+  // Dynamic getter that checks if all fields are empty
   get condition(): boolean {
-    return !this.name && !this.email && !this.dob;
+    const formValues = this.userForm.value;
+    return !formValues.name && !formValues.email && !formValues.dob;
   }
-  //i want to set the condition to true if all fields are empty
-  constructor () {
-    // if (!this.name && !this.email && !this.dob){
-    //   this.condition = true
-    // }
 
+  // Getters for easy access to form values in template
+  get name(): string {
+    return this.userForm.get('name')?.value || '';
   }
+
+  get email(): string {
+    return this.userForm.get('email')?.value || '';
+  }
+
+  get dob(): string {
+    return this.userForm.get('dob')?.value || '';
+  }
+  
+  constructor () {
+    // No need to set condition here anymore since it's now a getter
+  }
+  
   onReset(){
-    this.name = "";
-    this.email = "";
-    this.dob = "";
+    this.userForm.reset();
   }
   
   onSave(){
-    console.log("name: " + this.name)
-    console.log("email: " + this.email)
-    console.log("dob: " + this.dob)
+    const formValues = this.userForm.value;
+    console.log("name: " + formValues.name)
+    console.log("email: " + formValues.email)
+    console.log("dob: " + formValues.dob)
     this.counter += 1
     console.log("save times: " + this.counter)
   }
