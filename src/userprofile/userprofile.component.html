@@ -1,0 +1,11 @@
+<p>userprofile works!</p>
+<h1>Welcome, {{name}}</h1>
+<label>Name: </label><input [(ngModel)] = "name"/>
+<label>Email: </label><input [(ngModel)] = "email"/>
+<label>DateOfBrith: </label><input [(ngModel)] = "dob"/>
+<button (click)=" onReset()" [disabled]="condition">Reset</button>
+<button (click)=" onSave()" [disabled]="condition">Save</button>
+<h2>View Only Mode</h2>
+<div>Name: {{name}}</div>
+<div>Email: {{email}}</div>
+<div>DateOfBirth: {{dob}}</div>
