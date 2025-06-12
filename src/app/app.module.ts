@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserprofileComponent } from '../userprofile/userprofile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TodolistComponent } from '../todolist/todolist.component';
+import { HoverbackgroundDirective } from '../todolist/hoverbackground.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserprofileComponent
+    UserprofileComponent,
+    TodolistComponent,
+    HoverbackgroundDirective
   ],
   imports: [
     BrowserModule,
