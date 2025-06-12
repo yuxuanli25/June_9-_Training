@@ -1,0 +1,131 @@
+<div class="task-detail-container">
+  
+  <!-- Display Mode -->
+  <div *ngIf="!editMode" class="display-mode">
+    <div class="task-info">
+      <div class="field-group">
+        <label><strong>Title:</strong></label>
+        <p class="field-value">{{ task.title }}</p>
+      </div>
+
+      <div class="field-group">
+        <label><strong>Description:</strong></label>
+        <p class="field-value">{{ task.description }}</p>
+      </div>
+
+      <div class="field-group">
+        <label><strong>Status:</strong></label>
+        <p class="field-value">
+          <span class="status-badge" [ngClass]="'status-' + task.status.toLowerCase().replace(' ', '-')">
+            {{ task.status }}
+          </span>
+        </p>
+      </div>
+
+      <div class="field-group">
+        <label><strong>Priority:</strong></label>
+        <p class="field-value">
+          <span class="priority-badge" [ngClass]="'priority-' + task.priority.toLowerCase()">
+            {{ task.priority }}
+          </span>
+        </p>
+      </div>
+
+      <div class="field-group">
+        <label><strong>Due Date:</strong></label>
+        <p class="field-value">{{ task.dueDate | date:'fullDate' }}</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button (click)="startEdit()" class="edit-btn">
+        📝 Edit Task
+      </button>
+    </div>
+  </div>
+
+  <!-- Edit Mode -->
+  <div *ngIf="editMode" class="edit-mode">
+    <form class="edit-form">
+      
+      <div class="field-group">
+        <label for="title"><strong>Title:</strong></label>
+        <input 
+          id="title"
+          type="text" 
+          [(ngModel)]="editForm.title" 
+          name="title"
+          class="form-input"
+          placeholder="Enter task title"
+          required>
+      </div>
+
+      <div class="field-group">
+        <label for="description"><strong>Description:</strong></label>
+        <textarea 
+          id="description"
+          [(ngModel)]="editForm.description" 
+          name="description"
+          class="form-textarea"
+          placeholder="Enter task description"
+          rows="3"
+          required></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="status"><strong>Status:</strong></label>
+          <select 
+            id="status"
+            [(ngModel)]="editForm.status" 
+            name="status"
+            class="form-select"
+            required>
+            <option value="">Select Status</option>
+            <option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="priority"><strong>Priority:</strong></label>
+          <select 
+            id="priority"
+            [(ngModel)]="editForm.priority" 
+            name="priority"
+            class="form-select"
+            required>
+            <option value="">Select Priority</option>
+            <option *ngFor="let priority of priorityOptions" [value]="priority">
+              {{ priority }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="dueDate"><strong>Due Date:</strong></label>
+        <input 
+          id="dueDate"
+          type="date" 
+          [value]="getFormattedDate()"
+          (change)="onDateChange($event)"
+          name="dueDate"
+          class="form-input"
+          required>
+      </div>
+
+    </form>
+
+    <div class="edit-actions">
+      <button (click)="saveChanges()" class="save-btn">
+        💾 Save Changes
+      </button>
+      <button (click)="cancelEdit()" class="cancel-btn">
+        ❌ Cancel
+      </button>
+    </div>
+  </div>
+
+</div>

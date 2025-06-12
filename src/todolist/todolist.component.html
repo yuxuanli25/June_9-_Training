@@ -1,0 +1,36 @@
+<!-- Add Task Section -->
+<div>
+  <h3>Add New Task</h3>
+  <div >
+    <input 
+      type="text" 
+      [(ngModel)]="newTaskTitle" 
+      placeholder="Enter task title..."
+      (keydown)="onEnterKey($event)"
+    />
+    <button 
+      (click)="addTask()" 
+      [disabled]="!newTaskTitle.trim()"
+    >
+      Add Task
+    </button>
+  </div>
+</div>
+
+<!-- Your existing ng-container code stays the same after this -->
+<ng-container [ngSwitch]="TASKS.length" >
+  <ng-container *ngSwitchCase="0">
+    <div>No tasks available</div>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <div *ngFor="let task of TASKS" appHoverbackground [ngClass]="{red: task.dueDate < currentDate}">
+      <p>{{ task['title'] }}</p>
+    </div>
+  </ng-container>
+</ng-container>
+
+<!-- <div appHoverbackground style="padding: 20px; border: 1px solid black;">
+  Test hover here - should turn green on hover, yellow on leave
+</div> -->
+

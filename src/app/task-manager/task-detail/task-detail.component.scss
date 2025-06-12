@@ -1,0 +1,220 @@
+.task-detail-container {
+  padding: 20px;
+}
+
+/* Display Mode Styles */
+.display-mode {
+  .task-info {
+    .field-group {
+      margin-bottom: 20px;
+      
+      label {
+        display: block;
+        color: #495057;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      
+      .field-value {
+        margin: 0;
+        padding: 8px 0;
+        color: #212529;
+        line-height: 1.5;
+        min-height: 24px;
+      }
+    }
+  }
+  
+  .status-badge, .priority-badge {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+  }
+  
+  /* Status Badge Styles */
+  .status-incomplete {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-in-progress {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  .status-completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  /* Priority Badge Styles */
+  .priority-low {
+    background-color: #e2e3e5;
+    color: #383d41;
+  }
+  
+  .priority-medium {
+    background-color: #ffeaa7;
+    color: #856404;
+  }
+  
+  .priority-high {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .actions {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+    
+    .edit-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}
+
+/* Edit Mode Styles */
+.edit-mode {
+  .edit-form {
+    .field-group {
+      margin-bottom: 20px;
+      
+      label {
+        display: block;
+        color: #495057;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      
+      .form-input, .form-textarea, .form-select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+        background-color: white;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+        
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        
+        &:invalid {
+          border-color: #dc3545;
+        }
+      }
+      
+      .form-textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+  
+  .edit-actions {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 10px;
+    
+    button {
+      flex: 1;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+    }
+    
+    .save-btn {
+      background-color: #28a745;
+      color: white;
+      
+      &:hover {
+        background-color: #218838;
+      }
+    }
+    
+    .cancel-btn {
+      background-color: #6c757d;
+      color: white;
+      
+      &:hover {
+        background-color: #5a6268;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+  }
+}
+
+/* General Improvements */
+* {
+  box-sizing: border-box;
+}
+
+/* Form validation styling */
+.form-input:required:invalid,
+.form-textarea:required:invalid,
+.form-select:required:invalid {
+  border-color: #dc3545;
+}
+
+.form-input:required:valid,
+.form-textarea:required:valid,
+.form-select:required:valid {
+  border-color: #28a745;
+}
+
+/* Placeholder styling */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+/* Focus states for accessibility */
+button:focus,
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}

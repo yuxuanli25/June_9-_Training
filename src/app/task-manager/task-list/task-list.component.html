@@ -1,0 +1,79 @@
+<div class="task-manager-container">
+  <h2>Task Manager</h2>
+  
+  <!-- Status Filter Section -->
+  <div class="filter-section">
+    <label for="statusFilter"><strong>Filter by Status:</strong></label>
+    <select 
+      id="statusFilter" 
+      [(ngModel)]="selectedStatus" 
+      (change)="onStatusFilterChange(selectedStatus)"
+      class="status-filter">
+      <option *ngFor="let status of statusOptions" [value]="status">
+        {{ status }}
+      </option>
+    </select>
+    <span class="filter-info">
+      Showing: {{ (tasks | taskFilter:selectedStatus).length }} of {{ tasks.length }} tasks
+    </span>
+  </div>
+
+  <div class="main-content">
+    <!-- Task List Section -->
+    <div class="task-list-section">
+      <h3>Tasks</h3>
+      
+      <!-- No tasks message -->
+      <div *ngIf="(tasks | taskFilter:selectedStatus).length === 0" class="no-tasks">
+        <p>No tasks found for status: <strong>{{ selectedStatus }}</strong></p>
+      </div>
+
+      <!-- Task List -->
+      <div class="task-list">
+        <div 
+          *ngFor="let task of tasks | taskFilter:selectedStatus" 
+          class="task-item"
+          [class.selected]="task.id === selectedTaskId">
+          
+          <div class="task-summary">
+            <h4 class="task-title">{{ task.title }}</h4>
+            <div class="task-meta">
+              <span class="status" [ngClass]="'status-' + task.status.toLowerCase().replace(' ', '-')">
+                {{ task.status }}
+              </span>
+              <span class="priority" [ngClass]="'priority-' + task.priority.toLowerCase()">
+                {{ task.priority }} Priority
+              </span>
+              <span class="due-date">
+                Due: {{ task.dueDate | date:'shortDate' }}
+              </span>
+            </div>
+            <p class="task-description">{{ task.description }}</p>
+          </div>
+          
+          <div class="task-actions">
+            <button 
+              (click)="selectTask(task.id)" 
+              class="edit-btn"
+              [disabled]="task.id === selectedTaskId">
+              {{ task.id === selectedTaskId ? 'Selected' : 'Edit' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task Detail Section (Child Component) -->
+    <div class="task-detail-section" *ngIf="selectedTaskId">
+      <div class="detail-header">
+        <h3>Task Details</h3>
+        <button (click)="closeTaskDetail()" class="close-btn">✕</button>
+      </div>
+      
+      <app-task-detail
+        [task]="getSelectedTask()!"
+        (taskUpdated)="onTaskUpdated($event)">
+      </app-task-detail>
+    </div>
+  </div>
+</div>
