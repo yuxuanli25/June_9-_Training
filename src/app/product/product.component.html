@@ -1,0 +1,21 @@
+<h2>Product List</h2>
+
+<div class="search-bar">
+  <input 
+    type="text" 
+    [(ngModel)]="searchQuery" 
+    (ngModelChange)="onSearchChange($event)"
+    placeholder="Search products by name..." 
+    >
+</div>
+
+<button (click)="addProduct()">Add New Product</button>
+
+<div *ngFor="let product of products">
+  <h3>{{ product.title }}</h3>
+  <p>{{ product.description }}</p>
+  <p>Category: {{ product.category }}</p>
+  <button (click)="updateProduct(product.id)">Update</button>
+  <button (click)="deleteProduct(product.id)">Delete</button>
+  <hr>
+</div>

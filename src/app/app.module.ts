@@ -10,6 +10,8 @@ import { HoverbackgroundDirective } from '../todolist/hoverbackground.directive'
 import { TaskListComponent } from './task-manager/task-list/task-list.component';
 import { TaskDetailComponent } from './task-manager/task-detail/task-detail.component';
 import { TaskFilterPipe } from './task-manager/pipes/task-filter.pipe';
+import { ProductComponent } from './product/product.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,15 @@ import { TaskFilterPipe } from './task-manager/pipes/task-filter.pipe';
     HoverbackgroundDirective,
     TaskListComponent,
     TaskDetailComponent,
-    TaskFilterPipe
+    TaskFilterPipe,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
