@@ -12,6 +12,7 @@ import { TaskDetailComponent } from './task-manager/task-detail/task-detail.comp
 import { TaskFilterPipe } from './task-manager/pipes/task-filter.pipe';
 import { ProductComponent } from './product/product.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     TaskDetailComponent,
     TaskFilterPipe,
     ProductComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,

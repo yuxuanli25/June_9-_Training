@@ -1,0 +1,117 @@
+<div class="registration-container">
+  <h2>User Registration</h2>
+  
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" novalidate>
+    
+    <!-- Username Field -->
+    <div class="form-group">
+      <label for="username">Username *</label>
+      <input 
+        type="text" 
+        id="username" 
+        formControlName="username"
+        [class.invalid]="isFieldInvalid('username')"
+        placeholder="Enter your username">
+      <div class="error-message" *ngIf="isFieldInvalid('username')">
+        {{ getFieldError('username') }}
+      </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email">Email {{ isPhoneRequired() ? '' : '*' }}</label>
+      <input 
+        type="email" 
+        id="email" 
+        formControlName="email"
+        [class.invalid]="isFieldInvalid('email')"
+        placeholder="Enter your email address">
+      <div class="error-message" *ngIf="isFieldInvalid('email')">
+        {{ getFieldError('email') }}
+      </div>
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group">
+      <label for="password">Password *</label>
+      <input 
+        type="password" 
+        id="password" 
+        formControlName="password"
+        [class.invalid]="isFieldInvalid('password')"
+        placeholder="Enter your password (min 6 characters)">
+      <div class="error-message" *ngIf="isFieldInvalid('password')">
+        {{ getFieldError('password') }}
+      </div>
+    </div>
+
+    <!-- Confirm Password Field -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password *</label>
+      <input 
+        type="password" 
+        id="confirmPassword" 
+        formControlName="confirmPassword"
+        [class.invalid]="isFieldInvalid('confirmPassword') || hasPasswordMismatch()"
+        placeholder="Confirm your password">
+      <div class="error-message" *ngIf="isFieldInvalid('confirmPassword')">
+        {{ getFieldError('confirmPassword') }}
+      </div>
+      <div class="error-message" *ngIf="hasPasswordMismatch()">
+        Passwords do not match
+      </div>
+    </div>
+
+    <!-- Preferred Contact Method -->
+    <div class="form-group">
+      <label for="preferredContactMethod">Preferred Contact Method *</label>
+      <select 
+        id="preferredContactMethod" 
+        formControlName="preferredContactMethod"
+        [class.invalid]="isFieldInvalid('preferredContactMethod')">
+        <option *ngFor="let method of contactMethods" [value]="method.value">
+          {{ method.label }}
+        </option>
+      </select>
+      <div class="error-message" *ngIf="isFieldInvalid('preferredContactMethod')">
+        {{ getFieldError('preferredContactMethod') }}
+      </div>
+    </div>
+
+    <!-- Phone Number Field -->
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number {{ isPhoneRequired() ? '*' : '' }}</label>
+      <input 
+        type="tel" 
+        id="phoneNumber" 
+        formControlName="phoneNumber"
+        [class.invalid]="isFieldInvalid('phoneNumber')"
+        placeholder="Enter your phone number (10+ digits)">
+      <div class="error-message" *ngIf="isFieldInvalid('phoneNumber')">
+        {{ getFieldError('phoneNumber') }}
+      </div>
+      <div class="field-info" *ngIf="!isPhoneRequired()">
+        Optional - only required if Phone is selected as contact method
+      </div>
+    </div>
+
+    <!-- Form Buttons -->
+    <div class="form-buttons">
+      <button type="submit" class="btn-primary" [disabled]="registrationForm.invalid">
+        Register
+      </button>
+      <button type="button" class="btn-secondary" (click)="resetForm()">
+        Reset
+      </button>
+    </div>
+
+    <!-- Form Status Debug (for development) -->
+    <div class="form-debug" *ngIf="false">
+      <h4>Form Debug Info:</h4>
+      <p>Form Valid: {{ registrationForm.valid }}</p>
+      <p>Form Value: {{ registrationForm.value | json }}</p>
+      <p>Form Errors: {{ registrationForm.errors | json }}</p>
+    </div>
+
+  </form>
+</div>
