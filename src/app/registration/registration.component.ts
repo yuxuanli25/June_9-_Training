@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +15,10 @@ export class RegistrationComponent implements OnInit {
     { value: 'phone', label: 'Phone' }
   ];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -112,9 +116,16 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      console.log('Registration Form Submitted:', this.registrationForm.value);
-      alert('Registration successful!');
-      // Here you would typically send the data to a service
+      this.userService.registerUser(this.registrationForm.value).subscribe({
+        next: (response) => {
+          console.log('Registration successful:', response);
+          alert('Registration successful!');
+        },
+        error: (error) => {
+          console.error('Registration error:', error);
+          alert('Registration failed!');
+        }
+      });
     } else {
       console.log('Form is invalid');
       this.markAllFieldsAsTouched();
