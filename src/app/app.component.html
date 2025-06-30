@@ -1,9 +1,21 @@
-<!-- <app-userprofile></app-userprofile> -->
-<!-- <app-userprofile></app-userprofile>
-<app-todolist></app-todolist>
-<app-task-list></app-task-list> -->
-<!-- <app-product></app-product> -->
-<app-registration></app-registration>
+<!-- Auth Status Display -->
+<div class="auth-status" *ngIf="userService.isAuthenticated()">
+  <div class="user-info">
+    <h3>Welcome, {{ (userService.currentUser$ | async)?.username }}!</h3>
+    <p>Role: {{ (userService.currentUser$ | async)?.role }}</p>
+    <p>Email: {{ (userService.currentUser$ | async)?.email }}</p>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+    <button class="btn-test" (click)="testProtectedRoute()">Test Protected Route</button>
+    <button class="btn-test" *ngIf="userService.isAdmin()" (click)="testAdminRoute()">Test Admin Route</button>
+  </div>
+</div>
+
+<!-- Registration and Login Forms (show only when not authenticated) -->
+<div *ngIf="!userService.isAuthenticated()">
+  <app-registration></app-registration>
+  <hr style="margin: 40px 0; border: 1px solid #ddd;">
+  <app-login></app-login>
+</div>
 
 <!-- <router-outlet></router-outlet> -->
 

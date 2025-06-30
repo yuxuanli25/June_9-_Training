@@ -116,14 +116,33 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      this.userService.registerUser(this.registrationForm.value).subscribe({
+      // Prepare data for backend (exclude confirmPassword)
+      const formData = { ...this.registrationForm.value };
+      delete formData.confirmPassword;
+      
+      // Convert phoneNumber to number if it exists and is not empty
+      if (formData.phoneNumber && formData.phoneNumber.trim() !== '') {
+        formData.phoneNumber = parseInt(formData.phoneNumber, 10);
+      }
+      
+      this.userService.registerUser(formData).subscribe({
         next: (response) => {
           console.log('Registration successful:', response);
           alert('Registration successful!');
+          this.resetForm(); // Reset form after successful registration
         },
         error: (error) => {
           console.error('Registration error:', error);
-          alert('Registration failed!');
+          console.error('Error status:', error.status);
+          console.error('Error message:', error.message);
+          
+          if (error.status === 0) {
+            alert('Cannot connect to server. Please check if the backend is running on localhost:3000');
+          } else if (error.error && error.error.message) {
+            alert(`Registration failed: ${error.error.message}`);
+          } else {
+            alert(`Registration failed! Error: ${error.status} - ${error.message}`);
+          }
         }
       });
     } else {

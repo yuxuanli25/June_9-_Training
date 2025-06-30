@@ -11,8 +11,10 @@ import { TaskListComponent } from './task-manager/task-list/task-list.component'
 import { TaskDetailComponent } from './task-manager/task-detail/task-detail.component';
 import { TaskFilterPipe } from './task-manager/pipes/task-filter.pipe';
 import { ProductComponent } from './product/product.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { RegistrationComponent } from './registration/registration.component';
     TaskFilterPipe,
     ProductComponent,
     RegistrationComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,13 @@ import { RegistrationComponent } from './registration/registration.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
